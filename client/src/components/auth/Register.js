@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -15,12 +16,30 @@ const Register = () => {
             [e.target.name]: e.target.value,
         });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         if (password !== password2) {
             console.log('Passwords do not match ');
         } else {
-            console.log(formData);
+            const newUser = {
+                name,
+                email,
+                password,
+            };
+
+            try {
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                };
+                const body = JSON.stringify(newUser);
+
+                const res = await axios.post('/api/users', body, config);
+                console.log(res.data);
+            } catch (err) {
+                console.error(err.response.data);
+            }
         }
     };
 
@@ -36,7 +55,7 @@ const Register = () => {
                         type='text'
                         placeholder='Name'
                         name='name'
-                        value={name}
+                        value={name || ''}
                         onChange={onChange}
                     />
                 </div>
@@ -45,7 +64,7 @@ const Register = () => {
                         type='email'
                         placeholder='Email Address'
                         name='email'
-                        value={email}
+                        value={email || ''}
                         onChange={onChange}
                     />
                     <small className='form-text'>
@@ -56,10 +75,11 @@ const Register = () => {
                 <div className='form-group'>
                     <input
                         type='password'
-                        placeholder='Password'
+                        placeholder='New Password'
                         name='password'
-                        value={password}
+                        value={password || ''}
                         onChange={onChange}
+                        autoComplete='on'
                     />
                 </div>
                 <div className='form-group'>
@@ -67,8 +87,9 @@ const Register = () => {
                         type='password'
                         placeholder='Confirm Password'
                         name='password2'
-                        value={password2}
+                        value={password2 || ''}
                         onChange={onChange}
+                        autoComplete='on'
                     />
                 </div>
                 <input
