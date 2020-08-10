@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 // bring in action
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 // import axios from 'axios';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
     const [formData, setFormData] = useState({
         name: '',
         emai: '',
@@ -27,7 +28,7 @@ const Register = ({ setAlert }) => {
         if (password !== password2) {
             setAlert('Passwords do not match', 'danger');
         } else {
-            console.log('SUCCESS');
+            register({ name, email, password });
             // const newUser = {
             //     name,
             //     email,
@@ -114,7 +115,8 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
 };
 
 // connect pass state and action
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
