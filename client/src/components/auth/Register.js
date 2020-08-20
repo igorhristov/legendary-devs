@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 // connect redux with component
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 // bring in action
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 // import axios from 'axios';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         name: '',
         emai: '',
@@ -50,6 +50,11 @@ const Register = ({ setAlert, register }) => {
             // }
         }
     };
+
+    // Redirect if logged in
+    if (isAuthenticated) {
+        return <Redirect to='/dashboard' />;
+    }
 
     return (
         <Fragment>
@@ -116,7 +121,12 @@ const Register = ({ setAlert, register }) => {
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
 };
 
+const mapStateTopProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
 // connect pass state and action
-export default connect(null, { setAlert, register })(Register);
+export default connect(mapStateTopProps, { setAlert, register })(Register);
