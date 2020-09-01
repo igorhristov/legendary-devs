@@ -12,6 +12,7 @@ import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -28,7 +29,7 @@ if (localStorage.token) {
 
 const App = () => {
     useEffect(() => {
-        store.dispatch(loadUser);
+        store.dispatch(loadUser());
     }, []);
     return (
         <Provider store={store}>
@@ -49,6 +50,11 @@ const App = () => {
                                 exact
                                 path='/profiles'
                                 component={Profiles}
+                            />
+                            <Route
+                                exact
+                                path='/profile:id'
+                                component={Profile}
                             />
                             <PrivateRoute
                                 exact
