@@ -88,7 +88,6 @@ const AddExperience = ({ addExperience, history }) => {
                         <input
                             type='checkbox'
                             name='current'
-                            value=''
                             checked={current}
                             value={current}
                             onChange={(e) => {
@@ -120,9 +119,9 @@ const AddExperience = ({ addExperience, history }) => {
                     ></textarea>
                 </div>
                 <input type='submit' class='btn btn-primary my-1' />
-                <a class='btn btn-light my-1' href='dashboard.html'>
+                <Link class='btn btn-light my-1' to='/dashboard'>
                     Go Back
-                </a>
+                </Link>
             </form>
         </Fragment>
     );
@@ -132,4 +131,4 @@ AddExperience.propTypes = {
     addExperience: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addExperience })(AddExperience);
+export default connect(null, { addExperience })(withRouter(AddExperience));
