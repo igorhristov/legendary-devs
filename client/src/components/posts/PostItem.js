@@ -15,10 +15,10 @@ const PostItem = ({
     return (
         <div className='post bg-white p-1 my-1'>
             <div>
-                <a href='profile.html'>
+                <Link to={`/profile/${user}`}>
                     <img className='round-img' src={avatar} alt='' />
                     <h4>{name}</h4>
-                </a>
+                </Link>
             </div>
             <div>
                 <p className='my-1'>{text}</p>
@@ -52,7 +52,11 @@ const PostItem = ({
                 </Link>
 
                 {!auth.loading && user === auth.user._id && (
-                    <button onClick={e=>deletePost(_id)} type='button' className='btn btn-danger'>
+                    <button
+                        onClick={(e) => deletePost(_id)}
+                        type='button'
+                        className='btn btn-danger'
+                    >
                         <i className='fa fa-times'></i>
                     </button>
                 )}
@@ -73,4 +77,6 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
 });
 
-export default connect(mapStateToProps, { addLike, removeLike,deletePost })(PostItem);
+export default connect(mapStateToProps, { addLike, removeLike, deletePost })(
+    PostItem
+);
