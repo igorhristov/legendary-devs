@@ -11,7 +11,6 @@ connectDB();
 
 app.use(express.json({ extended: false }));
 
-// app.get('/', (req, res) => res.send('API Runing'));
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
